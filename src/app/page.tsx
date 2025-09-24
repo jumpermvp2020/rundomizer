@@ -38,6 +38,7 @@ const generators = [
   {
     id: 'numbers',
     title: 'Генератор чисел',
+    shortTitle: 'Числа',
     description: 'Выберите диапазон и получите случайные числа',
     icon: Hash,
     color: 'from-[#FCE7D7] to-[#F9F5FF]',
@@ -46,6 +47,7 @@ const generators = [
   {
     id: 'single-number',
     title: 'Случайное число',
+    shortTitle: 'Число',
     description: 'Одно число от 1 до 100 одним кликом',
     icon: Dice1,
     color: 'from-[#F9F5FF] to-[#FFF8E1]',
@@ -54,6 +56,7 @@ const generators = [
   {
     id: 'words',
     title: 'Генератор слов',
+    shortTitle: 'Слова',
     description: 'Случайные русские слова из словаря',
     icon: BookOpen,
     color: 'from-[#FFF8E1] to-[#FCE7D7]',
@@ -62,6 +65,7 @@ const generators = [
   {
     id: 'names',
     title: 'Генератор имён',
+    shortTitle: 'Имена',
     description: 'Случайные русские имена мужские и женские',
     icon: User,
     color: 'from-[#FCE7D7] to-[#F9F5FF]',
@@ -70,6 +74,7 @@ const generators = [
   {
     id: 'nicknames',
     title: 'Генератор никнеймов',
+    shortTitle: 'Никнеймы',
     description: 'Уникальные никнеймы и имена пользователей',
     icon: MessageSquare,
     color: 'from-[#F9F5FF] to-[#FFF8E1]',
@@ -78,6 +83,7 @@ const generators = [
   {
     id: 'quotes',
     title: 'Случайная цитата',
+    shortTitle: 'Цитаты',
     description: 'Вдохновляющие цитаты великих людей',
     icon: Quote,
     color: 'from-[#FFF8E1] to-[#FCE7D7]',
@@ -86,6 +92,7 @@ const generators = [
   {
     id: 'coin-flip',
     title: 'Орёл или решка',
+    shortTitle: 'Монета',
     description: 'Бросьте монету онлайн',
     icon: Coins,
     color: 'from-[#FCE7D7] to-[#F9F5FF]',
@@ -94,6 +101,7 @@ const generators = [
   {
     id: 'dice-roll',
     title: 'Бросок кости',
+    shortTitle: 'Кости',
     description: 'Бросьте игральную кость онлайн',
     icon: Dice6,
     color: 'from-[#F9F5FF] to-[#FFF8E1]',
@@ -102,6 +110,7 @@ const generators = [
   {
     id: 'lottery',
     title: 'Жребий онлайн',
+    shortTitle: 'Жребий',
     description: 'Случайный выбор из списка участников',
     icon: Users,
     color: 'from-[#FFF8E1] to-[#FCE7D7]',
@@ -141,7 +150,10 @@ export default function HomePage() {
                   <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center group-data-[state=active]:bg-gradient-to-br group-data-[state=active]:from-blue-500 group-data-[state=active]:to-purple-600 transition-all duration-200">
                     <IconComponent className="w-4 h-4 text-gray-600 group-data-[state=active]:text-white" />
                   </div>
-                  <span className="hidden sm:block text-center leading-tight text-gray-600 group-data-[state=active]:text-gray-900 font-medium">
+                  <span className="hidden sm:block md:hidden text-center leading-tight text-gray-600 group-data-[state=active]:text-gray-900 font-medium text-xs">
+                    {generator.shortTitle}
+                  </span>
+                  <span className="hidden md:block text-center leading-tight text-gray-600 group-data-[state=active]:text-gray-900 font-medium">
                     {generator.title}
                   </span>
                 </TabsTrigger>

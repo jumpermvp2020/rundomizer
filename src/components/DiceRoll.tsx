@@ -21,12 +21,14 @@ interface RollResult {
 
 export default function DiceRoll() {
     const [count, setCount] = useState(1)
+    const [countInput, setCountInput] = useState('')
     const [rollResult, setRollResult] = useState<RollResult | null>(null)
     const [isRolling, setIsRolling] = useState(false)
 
     const rollDice = () => {
-        if (count > 6) {
-            alert('Максимум 6 костей за раз')
+        const actualCount = parseInt(countInput) || 1
+        if (actualCount > 100) {
+            alert('Максимум 100 костей за раз')
             return
         }
 
@@ -37,7 +39,7 @@ export default function DiceRoll() {
             const dice: DiceResult[] = []
             let total = 0
 
-            for (let i = 0; i < count; i++) {
+            for (let i = 0; i < actualCount; i++) {
                 // Используем crypto.getRandomValues для честной генерации
                 const array = new Uint32Array(1)
                 crypto.getRandomValues(array)
@@ -90,12 +92,12 @@ export default function DiceRoll() {
                     <Input
                         id="count"
                         type="number"
-                        value={count}
-                        onChange={(e) => setCount(parseInt(e.target.value) || 1)}
+                        value={countInput}
+                        onChange={(e) => setCountInput(e.target.value)}
                         className="mt-1"
                         placeholder="1"
                         min="1"
-                        max="6"
+                        max="100"
                     />
                 </div>
 

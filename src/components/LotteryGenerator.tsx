@@ -31,8 +31,8 @@ export default function LotteryGenerator() {
             return
         }
 
-        if (participantList.length >= 50) {
-            alert('Максимум 50 участников')
+        if (participantList.length >= 1000) {
+            alert('Максимум 1,000 участников')
             return
         }
 

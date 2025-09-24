@@ -6,9 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { CopyButton } from '@/components/ui/copy-button'
-import { ShareButton } from '@/components/ui/share-button'
-import { RefreshCw } from 'lucide-react'
+import { ResultsHeader } from '@/components/ui/results-header'
 import { russianWords } from '@/data/words'
 
 interface GeneratedWord {
@@ -18,12 +16,14 @@ interface GeneratedWord {
 
 export default function WordGenerator() {
     const [count, setCount] = useState(1)
+    const [countInput, setCountInput] = useState('')
     const [words, setWords] = useState<GeneratedWord[]>([])
     const [isGenerating, setIsGenerating] = useState(false)
 
     const generateWords = () => {
-        if (count > 10) {
-            alert('Максимум 10 слов за раз')
+        const actualCount = parseInt(countInput) || 1
+        if (actualCount > 1000) {
+            alert('Максимум 1,000 слов за раз')
             return
         }
 
@@ -33,7 +33,7 @@ export default function WordGenerator() {
         setTimeout(() => {
             const newWords: GeneratedWord[] = []
 
-            for (let i = 0; i < count; i++) {
+            for (let i = 0; i < actualCount; i++) {
                 // Используем crypto.getRandomValues для честной генерации
                 const array = new Uint32Array(1)
                 crypto.getRandomValues(array)
@@ -70,12 +70,12 @@ export default function WordGenerator() {
                     <Input
                         id="count"
                         type="number"
-                        value={count}
-                        onChange={(e) => setCount(parseInt(e.target.value) || 1)}
+                        value={countInput}
+                        onChange={(e) => setCountInput(e.target.value)}
                         className="mt-1"
                         placeholder="1"
                         min="1"
-                        max="10"
+                        max="1000"
                     />
                 </div>
 
@@ -104,40 +104,14 @@ export default function WordGenerator() {
                             exit={{ opacity: 0, y: -20 }}
                             className="space-y-4"
                         >
-                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-2">
-                                <h3 className="text-base sm:text-lg font-semibold text-[#1A1A1A]">
-                                    Результат ({words.length} слов)
-                                </h3>
-                                <div className="flex flex-wrap gap-1 sm:gap-2">
-                                    <Button
-                                        variant="outline"
-                                        size="sm"
-                                        onClick={generateWords}
-                                        className="text-[#4B5563] border-[#D1D5DB] text-xs px-2 py-1 h-7"
-                                    >
-                                        <RefreshCw className="w-3 h-3 mr-1" />
-                                        <span className="hidden sm:inline">Ещё раз</span>
-                                        <span className="sm:hidden">Ещё</span>
-                                    </Button>
-                                    <CopyButton
-                                        text={getCopyText()}
-                                        size="sm"
-                                        className="text-[#4B5563] border-[#D1D5DB] text-xs px-2 py-1 h-7"
-                                    >
-                                        <span className="hidden sm:inline">Копировать</span>
-                                        <span className="sm:hidden">Копия</span>
-                                    </CopyButton>
-                                    <ShareButton
-                                        text={getShareText()}
-                                        title="Случайные слова"
-                                        size="sm"
-                                        className="text-[#4B5563] border-[#D1D5DB] text-xs px-2 py-1 h-7"
-                                    >
-                                        <span className="hidden sm:inline">Поделиться</span>
-                                        <span className="sm:hidden">Шарить</span>
-                                    </ShareButton>
-                                </div>
-                            </div>
+                            <ResultsHeader
+                                title="Результат"
+                                count={words.length}
+                                onRegenerate={generateWords}
+                                copyText={getCopyText()}
+                                shareText={getShareText()}
+                                shareTitle="Случайные слова"
+                            />
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                 {words.map((word, index) => (

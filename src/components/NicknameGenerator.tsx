@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { RefreshCw, Share2 } from 'lucide-react'
+import { ResultsHeader } from '@/components/ui/results-header'
 import { adjectives, nouns, numbers } from '@/data/nicknames'
 
 interface GeneratedNickname {
@@ -16,12 +16,14 @@ interface GeneratedNickname {
 
 export default function NicknameGenerator() {
     const [count, setCount] = useState(1)
+    const [countInput, setCountInput] = useState('')
     const [nicknames, setNicknames] = useState<GeneratedNickname[]>([])
     const [isGenerating, setIsGenerating] = useState(false)
 
     const generateNickname = () => {
-        if (count > 5) {
-            alert('Максимум 5 никнеймов за раз')
+        const actualCount = parseInt(countInput) || 1
+        if (actualCount > 1000) {
+            alert('Максимум 1,000 никнеймов за раз')
             return
         }
 
@@ -31,7 +33,7 @@ export default function NicknameGenerator() {
         setTimeout(() => {
             const newNicknames: GeneratedNickname[] = []
 
-            for (let i = 0; i < count; i++) {
+            for (let i = 0; i < actualCount; i++) {
                 // Используем crypto.getRandomValues для честной генерации
                 const array = new Uint32Array(3)
                 crypto.getRandomValues(array)
@@ -64,12 +66,14 @@ export default function NicknameGenerator() {
         }, 600)
     }
 
-    const shareResults = () => {
-        if (nicknames.length === 0) return
+    const getCopyText = () => {
+        if (nicknames.length === 0) return ""
+        return `Случайные никнеймы: ${nicknames.map(n => n.nickname).join(', ')}`
+    }
 
-        const text = `Случайные никнеймы: ${nicknames.map(n => n.nickname).join(', ')}`
-        navigator.clipboard.writeText(text)
-        alert('Результаты скопированы в буфер обмена!')
+    const getShareText = () => {
+        if (nicknames.length === 0) return ""
+        return `Случайные никнеймы: ${nicknames.map(n => n.nickname).join(', ')}`
     }
 
     return (
@@ -83,12 +87,12 @@ export default function NicknameGenerator() {
                     <Input
                         id="count"
                         type="number"
-                        value={count}
-                        onChange={(e) => setCount(parseInt(e.target.value) || 1)}
+                        value={countInput}
+                        onChange={(e) => setCountInput(e.target.value)}
                         className="mt-1"
                         placeholder="1"
                         min="1"
-                        max="5"
+                        max="1000"
                     />
                 </div>
 
@@ -117,31 +121,14 @@ export default function NicknameGenerator() {
                             exit={{ opacity: 0, y: -20 }}
                             className="space-y-4"
                         >
-                            <div className="flex items-center justify-between">
-                                <h3 className="text-lg font-semibold text-[#1A1A1A]">
-                                    Результат ({nicknames.length} никнеймов)
-                                </h3>
-                                <div className="flex gap-2">
-                                    <Button
-                                        variant="outline"
-                                        size="sm"
-                                        onClick={generateNickname}
-                                        className="text-[#4B5563] border-[#D1D5DB]"
-                                    >
-                                        <RefreshCw className="w-4 h-4 mr-2" />
-                                        Ещё раз
-                                    </Button>
-                                    <Button
-                                        variant="outline"
-                                        size="sm"
-                                        onClick={shareResults}
-                                        className="text-[#4B5563] border-[#D1D5DB]"
-                                    >
-                                        <Share2 className="w-4 h-4 mr-2" />
-                                        Поделиться
-                                    </Button>
-                                </div>
-                            </div>
+                            <ResultsHeader
+                                title="Результат"
+                                count={nicknames.length}
+                                onRegenerate={generateNickname}
+                                copyText={getCopyText()}
+                                shareText={getShareText()}
+                                shareTitle="Случайные никнеймы"
+                            />
 
                             <div className="space-y-3">
                                 {nicknames.map((nickname, index) => (

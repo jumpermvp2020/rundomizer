@@ -6,9 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { CopyButton } from '@/components/ui/copy-button'
-import { ShareButton } from '@/components/ui/share-button'
-import { RefreshCw } from 'lucide-react'
+import { ResultsHeader } from '@/components/ui/results-header'
 
 interface GeneratedNumber {
     value: number
@@ -17,19 +15,26 @@ interface GeneratedNumber {
 
 export default function NumberGenerator() {
     const [from, setFrom] = useState(1)
+    const [fromInput, setFromInput] = useState('')
     const [to, setTo] = useState(100)
+    const [toInput, setToInput] = useState('')
     const [count, setCount] = useState(1)
+    const [countInput, setCountInput] = useState('')
     const [numbers, setNumbers] = useState<GeneratedNumber[]>([])
     const [isGenerating, setIsGenerating] = useState(false)
 
     const generateNumbers = () => {
-        if (from >= to) {
+        const actualFrom = parseInt(fromInput) || 1
+        const actualTo = parseInt(toInput) || 100
+        const actualCount = parseInt(countInput) || 1
+
+        if (actualFrom >= actualTo) {
             alert('Число "от" должно быть меньше числа "до"')
             return
         }
 
-        if (count > 1000) {
-            alert('Максимум 1000 чисел за раз')
+        if (actualCount > 100000) {
+            alert('Максимум 100,000 чисел за раз')
             return
         }
 
@@ -38,13 +43,13 @@ export default function NumberGenerator() {
         // Имитация задержки для анимации
         setTimeout(() => {
             const newNumbers: GeneratedNumber[] = []
-            const range = to - from + 1
+            const range = actualTo - actualFrom + 1
 
-            for (let i = 0; i < count; i++) {
+            for (let i = 0; i < actualCount; i++) {
                 // Используем crypto.getRandomValues для честной генерации
                 const array = new Uint32Array(1)
                 crypto.getRandomValues(array)
-                const randomValue = from + (array[0] % range)
+                const randomValue = actualFrom + (array[0] % range)
                 newNumbers.push({
                     value: randomValue,
                     timestamp: Date.now()
@@ -78,8 +83,8 @@ export default function NumberGenerator() {
                         <Input
                             id="from"
                             type="number"
-                            value={from}
-                            onChange={(e) => setFrom(parseInt(e.target.value) || 1)}
+                            value={fromInput}
+                            onChange={(e) => setFromInput(e.target.value)}
                             className="mt-1"
                             placeholder="1"
                         />
@@ -91,8 +96,8 @@ export default function NumberGenerator() {
                         <Input
                             id="to"
                             type="number"
-                            value={to}
-                            onChange={(e) => setTo(parseInt(e.target.value) || 100)}
+                            value={toInput}
+                            onChange={(e) => setToInput(e.target.value)}
                             className="mt-1"
                             placeholder="100"
                         />
@@ -104,12 +109,12 @@ export default function NumberGenerator() {
                         <Input
                             id="count"
                             type="number"
-                            value={count}
-                            onChange={(e) => setCount(parseInt(e.target.value) || 1)}
+                            value={countInput}
+                            onChange={(e) => setCountInput(e.target.value)}
                             className="mt-1"
                             placeholder="1"
                             min="1"
-                            max="1000"
+                            max="100000"
                         />
                     </div>
                 </div>
@@ -139,40 +144,14 @@ export default function NumberGenerator() {
                             exit={{ opacity: 0, y: -20 }}
                             className="space-y-4"
                         >
-                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-2">
-                                <h3 className="text-base sm:text-lg font-semibold text-[#1A1A1A]">
-                                    Результат ({numbers.length} чисел)
-                                </h3>
-                                <div className="flex flex-wrap gap-1 sm:gap-2">
-                                    <Button
-                                        variant="outline"
-                                        size="sm"
-                                        onClick={generateNumbers}
-                                        className="text-[#4B5563] border-[#D1D5DB] text-xs px-2 py-1 h-7"
-                                    >
-                                        <RefreshCw className="w-3 h-3 mr-1" />
-                                        <span className="hidden sm:inline">Ещё раз</span>
-                                        <span className="sm:hidden">Ещё</span>
-                                    </Button>
-                                    <CopyButton
-                                        text={getCopyText()}
-                                        size="sm"
-                                        className="text-[#4B5563] border-[#D1D5DB] text-xs px-2 py-1 h-7"
-                                    >
-                                        <span className="hidden sm:inline">Копировать</span>
-                                        <span className="sm:hidden">Копия</span>
-                                    </CopyButton>
-                                    <ShareButton
-                                        text={getShareText()}
-                                        title="Сгенерированные числа"
-                                        size="sm"
-                                        className="text-[#4B5563] border-[#D1D5DB] text-xs px-2 py-1 h-7"
-                                    >
-                                        <span className="hidden sm:inline">Поделиться</span>
-                                        <span className="sm:hidden">Шарить</span>
-                                    </ShareButton>
-                                </div>
-                            </div>
+                            <ResultsHeader
+                                title="Результат"
+                                count={numbers.length}
+                                onRegenerate={generateNumbers}
+                                copyText={getCopyText()}
+                                shareText={getShareText()}
+                                shareTitle="Сгенерированные числа"
+                            />
 
                             <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2 md:gap-3">
                                 {numbers.map((number, index) => (
