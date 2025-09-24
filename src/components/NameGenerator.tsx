@@ -40,7 +40,7 @@ export default function NameGenerator() {
             const names = selectedGender === 'male' ? maleNames : femaleNames
             const nameArray = new Uint32Array(1)
             crypto.getRandomValues(nameArray)
-            selectedName = names[nameArray[0] % names.length]
+            const selectedName = names[nameArray[0] % names.length]
 
             setName({
                 name: selectedName,
