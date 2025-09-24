@@ -284,6 +284,36 @@ export default function HomePage() {
           </div>
         </div>
 
+        {/* О сайте */}
+        <div className="bg-gradient-to-br from-blue-50/50 to-purple-50/50 rounded-3xl p-6 md:p-12 shadow-sm border border-blue-100/50 mb-8 md:mb-12">
+          <div className="text-center mb-6 md:mb-8">
+            <div className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 mb-4 md:mb-6">
+              <Hash className="w-6 h-6 md:w-8 md:h-8 text-white" />
+            </div>
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-3 md:mb-4">
+              Что такое rundomizer.ru?
+            </h2>
+          </div>
+          <div className="max-w-4xl mx-auto">
+            <div className="prose prose-lg max-w-none text-center">
+              <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-700 leading-relaxed mb-4 md:mb-6">
+                <strong>Rundomizer.ru</strong> — это простой и удобный онлайн-генератор случайных чисел.
+                Мы создали этот сервис для тех, кому нужно быстро получить случайное число — для розыгрышей,
+                игр, жеребьёвки, экспериментов или просто ради интереса.
+              </p>
+              <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-700 leading-relaxed mb-4 md:mb-6">
+                Здесь всё работает мгновенно и бесплатно: выберите диапазон, нажмите кнопку — и результат готов.
+                Никакой регистрации, никаких лишних шагов.
+              </p>
+              <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-700 leading-relaxed">
+                Наш генератор помогает там, где важна честность и случайность: от розыгрышей призов и конкурсов
+                до учебных задач и повседневных решений. Если вы искали надёжный «рандомайзер» — добро пожаловать,
+                вы по адресу.
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* Footer */}
         <footer className="bg-gradient-to-br from-gray-50 to-white border-t border-gray-100 mt-8 md:mt-16">
           <div className="container mx-auto px-4 py-6 md:py-8">
