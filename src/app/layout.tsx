@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Analytics from "@/components/Analytics";
 
 const inter = Inter({
   subsets: ["latin", "cyrillic"],
@@ -55,50 +56,6 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <head>
-        {/* Google Analytics */}
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-ZBTZ97PP8S"
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-ZBTZ97PP8S');
-            `,
-          }}
-        />
-        {/* /Google Analytics */}
-
-        {/* Yandex.Metrika counter */}
-        <script
-          type="text/javascript"
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function(m,e,t,r,i,k,a){
-                m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-                m[i].l=1*new Date();
-                for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-                k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-              })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=104267684', 'ym');
-
-              ym(104267684, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
-            `,
-          }}
-        />
-        <noscript>
-          <div>
-            <img
-              src="https://mc.yandex.ru/watch/104267684"
-              style={{ position: 'absolute', left: '-9999px' }}
-              alt=""
-            />
-          </div>
-        </noscript>
-        {/* /Yandex.Metrika counter */}
-
         {/* Structured Data */}
         <script
           type="application/ld+json"
@@ -136,6 +93,7 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} font-sans antialiased`}>
         {children}
+        <Analytics />
       </body>
     </html>
   );
