@@ -7,7 +7,8 @@ import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { CopyButton } from '@/components/ui/copy-button'
-import { RefreshCw, Share2 } from 'lucide-react'
+import { ShareButton } from '@/components/ui/share-button'
+import { RefreshCw } from 'lucide-react'
 
 interface GeneratedNumber {
     value: number
@@ -55,15 +56,12 @@ export default function NumberGenerator() {
         }, 500)
     }
 
-    const shareResults = () => {
-        if (numbers.length === 0) return
-
-        const text = `Сгенерированные числа: ${numbers.map(n => n.value).join(', ')}`
-        navigator.clipboard.writeText(text)
-        alert('Результаты скопированы в буфер обмена!')
+    const getCopyText = () => {
+        if (numbers.length === 0) return ""
+        return `Сгенерированные числа: ${numbers.map(n => n.value).join(', ')}`
     }
 
-    const getCopyText = () => {
+    const getShareText = () => {
         if (numbers.length === 0) return ""
         return `Сгенерированные числа: ${numbers.map(n => n.value).join(', ')}`
     }
