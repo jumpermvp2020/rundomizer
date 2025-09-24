@@ -14,11 +14,8 @@ interface GeneratedNumber {
 }
 
 export default function NumberGenerator() {
-    const [from, setFrom] = useState(1)
     const [fromInput, setFromInput] = useState('')
-    const [to, setTo] = useState(100)
     const [toInput, setToInput] = useState('')
-    const [count, setCount] = useState(1)
     const [countInput, setCountInput] = useState('')
     const [numbers, setNumbers] = useState<GeneratedNumber[]>([])
     const [isGenerating, setIsGenerating] = useState(false)

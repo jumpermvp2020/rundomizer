@@ -15,7 +15,6 @@ interface GeneratedWord {
 }
 
 export default function WordGenerator() {
-    const [count, setCount] = useState(1)
     const [countInput, setCountInput] = useState('')
     const [words, setWords] = useState<GeneratedWord[]>([])
     const [isGenerating, setIsGenerating] = useState(false)

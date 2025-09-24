@@ -2,10 +2,24 @@
 
 import { useEffect } from 'react'
 
+interface NetworkInformation {
+    effectiveType?: string
+    saveData?: boolean
+}
+
+interface NavigatorWithConnection extends Navigator {
+    connection?: NetworkInformation
+    mozConnection?: NetworkInformation
+    webkitConnection?: NetworkInformation
+}
+
 export default function Analytics() {
     useEffect(() => {
         // Проверяем производительность соединения
-        const connection = (navigator as any).connection || (navigator as any).mozConnection || (navigator as any).webkitConnection
+        const navigatorWithConnection = navigator as NavigatorWithConnection
+        const connection = navigatorWithConnection.connection ||
+            navigatorWithConnection.mozConnection ||
+            navigatorWithConnection.webkitConnection
 
         // Если соединение медленное (2G) или пользователь предпочитает экономить трафик, не загружаем метрики
         if (connection && (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g' || connection.saveData)) {

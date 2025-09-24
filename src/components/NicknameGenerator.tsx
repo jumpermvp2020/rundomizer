@@ -15,7 +15,6 @@ interface GeneratedNickname {
 }
 
 export default function NicknameGenerator() {
-    const [count, setCount] = useState(1)
     const [countInput, setCountInput] = useState('')
     const [nicknames, setNicknames] = useState<GeneratedNickname[]>([])
     const [isGenerating, setIsGenerating] = useState(false)

@@ -20,7 +20,6 @@ interface RollResult {
 }
 
 export default function DiceRoll() {
-    const [count, setCount] = useState(1)
     const [countInput, setCountInput] = useState('')
     const [rollResult, setRollResult] = useState<RollResult | null>(null)
     const [isRolling, setIsRolling] = useState(false)
@@ -118,7 +117,7 @@ export default function DiceRoll() {
                                     </motion.div>
                                 ))
                             ) : (
-                                Array.from({ length: count }, (_, index) => (
+                                Array.from({ length: parseInt(countInput) || 1 }, (_, index) => (
                                     <motion.div
                                         key={index}
                                         initial={{ opacity: 0 }}
@@ -143,7 +142,7 @@ export default function DiceRoll() {
                                 Сумма: {rollResult.total}
                             </div>
                             <div className="text-sm text-[#9CA3AF]">
-                                Результат броска {count} костей
+                                Результат броска {rollResult.dice.length} костей
                             </div>
                         </motion.div>
                     )}
