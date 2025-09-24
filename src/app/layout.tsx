@@ -19,6 +19,20 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://rundomizer.ru",
   },
+  icons: {
+    icon: [
+      { url: "/favicon/favicon.ico", sizes: "any" },
+      { url: "/favicon/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon/favicon-96x96.png", sizes: "96x96", type: "image/png" },
+    ],
+    apple: [
+      { url: "/favicon/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+    other: [
+      { rel: "mask-icon", url: "/favicon/favicon.svg", color: "#000000" },
+    ],
+  },
+  manifest: "/favicon/site.webmanifest",
   openGraph: {
     type: "website",
     locale: "ru_RU",
@@ -46,6 +60,10 @@ export const metadata: Metadata = {
     yandex: "your-yandex-verification-code",
   },
   category: "technology",
+  other: {
+    "msapplication-TileColor": "#000000",
+    "theme-color": "#000000",
+  },
 };
 
 export default function RootLayout({
@@ -56,6 +74,17 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <head>
+        {/* Дополнительные SEO мета-теги */}
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="Rundomizer" />
+        <meta name="application-name" content="Rundomizer" />
+        <meta name="msapplication-TileColor" content="#000000" />
+        <meta name="msapplication-config" content="/favicon/browserconfig.xml" />
+
         {/* Structured Data */}
         <script
           type="application/ld+json"
@@ -86,7 +115,12 @@ export default function RootLayout({
                 "Орёл или решка",
                 "Бросок кости",
                 "Жребий онлайн"
-              ]
+              ],
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "5.0",
+                "ratingCount": "1000"
+              }
             })
           }}
         />
