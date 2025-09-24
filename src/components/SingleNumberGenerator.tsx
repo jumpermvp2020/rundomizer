@@ -5,7 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { CopyButton } from '@/components/ui/copy-button'
-import { RefreshCw, Share2 } from 'lucide-react'
+import { ShareButton } from '@/components/ui/share-button'
+import { RefreshCw } from 'lucide-react'
 
 export default function SingleNumberGenerator() {
     const [currentNumber, setCurrentNumber] = useState<number | null>(null)
@@ -28,22 +29,19 @@ export default function SingleNumberGenerator() {
         }, 800)
     }
 
-    const shareResult = () => {
-        if (currentNumber === null) return
-
-        const text = `Случайное число: ${currentNumber}`
-        navigator.clipboard.writeText(text)
-        alert('Результат скопирован в буфер обмена!')
-    }
-
     const getCopyText = () => {
         if (currentNumber === null) return ""
         return `Случайное число: ${currentNumber}`
     }
 
+    const getShareText = () => {
+        if (currentNumber === null) return ""
+        return `Случайное число: ${currentNumber}`
+    }
+
     return (
-        <Card className="p-12 bg-white rounded-3xl shadow-sm border border-gray-100">
-            <div className="space-y-10">
+        <Card className="p-6 md:p-12 bg-white rounded-3xl shadow-sm border border-gray-100">
+            <div className="space-y-6 md:space-y-10">
                 {/* Основной дисплей числа */}
                 <div className="text-center">
                     <AnimatePresence mode="wait">
@@ -56,7 +54,7 @@ export default function SingleNumberGenerator() {
                                 transition={{ duration: 0.6, ease: "easeOut" }}
                                 className="relative"
                             >
-                                <div className="text-8xl md:text-9xl font-bold bg-gradient-to-br from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
+                                <div className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold bg-gradient-to-br from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4 break-words">
                                     {currentNumber}
                                 </div>
                                 <div className="text-sm text-[#9CA3AF]">
@@ -84,7 +82,7 @@ export default function SingleNumberGenerator() {
                         <Button
                             onClick={generateNumber}
                             disabled={isGenerating}
-                            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-12 py-4 text-xl font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-200"
+                            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 md:px-12 py-3 md:py-4 text-lg md:text-xl font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-200"
                         >
                             {isGenerating ? 'Генерируем...' : 'Получить число'}
                         </Button>
@@ -96,34 +94,31 @@ export default function SingleNumberGenerator() {
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="flex justify-center gap-4"
+                        className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4"
                     >
                         <Button
                             variant="outline"
                             onClick={generateNumber}
-                            className="text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300 rounded-xl px-6 py-3 transition-all duration-200"
+                            className="text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300 rounded-xl px-4 md:px-6 py-2 md:py-3 transition-all duration-200"
                         >
                             <RefreshCw className="w-4 h-4 mr-2" />
                             Ещё раз
                         </Button>
                         <CopyButton
                             text={getCopyText()}
-                            className="text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300 rounded-xl px-6 py-3"
+                            className="text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300 rounded-xl px-4 md:px-6 py-2 md:py-3"
                         />
-                        <Button
-                            variant="outline"
-                            onClick={shareResult}
-                            className="text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300 rounded-xl px-6 py-3 transition-all duration-200"
-                        >
-                            <Share2 className="w-4 h-4 mr-2" />
-                            Поделиться
-                        </Button>
+                        <ShareButton
+                            text={getShareText()}
+                            title="Случайное число"
+                            className="text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300 rounded-xl px-4 md:px-6 py-2 md:py-3"
+                        />
                     </motion.div>
                 )}
 
                 {/* Информация */}
-                <div className="text-center text-sm text-gray-500 bg-gray-50 rounded-2xl p-6">
-                    <div className="flex items-center justify-center gap-6">
+                <div className="text-center text-xs md:text-sm text-gray-500 bg-gray-50 rounded-2xl p-4 md:p-6">
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6">
                         <div className="flex items-center gap-2">
                             <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                             <span>Диапазон: 1 - 100</span>

@@ -7,7 +7,8 @@ import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { CopyButton } from '@/components/ui/copy-button'
-import { RefreshCw, Share2 } from 'lucide-react'
+import { ShareButton } from '@/components/ui/share-button'
+import { RefreshCw } from 'lucide-react'
 import { russianWords } from '@/data/words'
 
 interface GeneratedWord {
@@ -48,15 +49,12 @@ export default function WordGenerator() {
         }, 600)
     }
 
-    const shareResults = () => {
-        if (words.length === 0) return
-
-        const text = `Случайные слова: ${words.map(w => w.word).join(', ')}`
-        navigator.clipboard.writeText(text)
-        alert('Результаты скопированы в буфер обмена!')
+    const getCopyText = () => {
+        if (words.length === 0) return ""
+        return `Случайные слова: ${words.map(w => w.word).join(', ')}`
     }
 
-    const getCopyText = () => {
+    const getShareText = () => {
         if (words.length === 0) return ""
         return `Случайные слова: ${words.map(w => w.word).join(', ')}`
     }
@@ -106,34 +104,38 @@ export default function WordGenerator() {
                             exit={{ opacity: 0, y: -20 }}
                             className="space-y-4"
                         >
-                            <div className="flex items-center justify-between">
-                                <h3 className="text-lg font-semibold text-[#1A1A1A]">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-2">
+                                <h3 className="text-base sm:text-lg font-semibold text-[#1A1A1A]">
                                     Результат ({words.length} слов)
                                 </h3>
-                                <div className="flex gap-2">
+                                <div className="flex flex-wrap gap-1 sm:gap-2">
                                     <Button
                                         variant="outline"
                                         size="sm"
                                         onClick={generateWords}
-                                        className="text-[#4B5563] border-[#D1D5DB]"
+                                        className="text-[#4B5563] border-[#D1D5DB] text-xs px-2 py-1 h-7"
                                     >
-                                        <RefreshCw className="w-4 h-4 mr-2" />
-                                        Ещё раз
+                                        <RefreshCw className="w-3 h-3 mr-1" />
+                                        <span className="hidden sm:inline">Ещё раз</span>
+                                        <span className="sm:hidden">Ещё</span>
                                     </Button>
                                     <CopyButton
                                         text={getCopyText()}
                                         size="sm"
-                                        className="text-[#4B5563] border-[#D1D5DB]"
-                                    />
-                                    <Button
-                                        variant="outline"
-                                        size="sm"
-                                        onClick={shareResults}
-                                        className="text-[#4B5563] border-[#D1D5DB]"
+                                        className="text-[#4B5563] border-[#D1D5DB] text-xs px-2 py-1 h-7"
                                     >
-                                        <Share2 className="w-4 h-4 mr-2" />
-                                        Поделиться
-                                    </Button>
+                                        <span className="hidden sm:inline">Копировать</span>
+                                        <span className="sm:hidden">Копия</span>
+                                    </CopyButton>
+                                    <ShareButton
+                                        text={getShareText()}
+                                        title="Случайные слова"
+                                        size="sm"
+                                        className="text-[#4B5563] border-[#D1D5DB] text-xs px-2 py-1 h-7"
+                                    >
+                                        <span className="hidden sm:inline">Поделиться</span>
+                                        <span className="sm:hidden">Шарить</span>
+                                    </ShareButton>
                                 </div>
                             </div>
 

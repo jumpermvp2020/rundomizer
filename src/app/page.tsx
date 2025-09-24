@@ -301,7 +301,7 @@ export default function HomePage() {
                 </a>
               </div>
               <div className="mt-3 md:mt-4 text-xs text-gray-400">
-                © 2024 rundomizer.ru. Все права защищены.
+                © {new Date().getFullYear()} rundomizer.ru. Все права защищены.
               </div>
             </div>
           </div>

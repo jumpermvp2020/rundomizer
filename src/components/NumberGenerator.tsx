@@ -139,47 +139,51 @@ export default function NumberGenerator() {
                             exit={{ opacity: 0, y: -20 }}
                             className="space-y-4"
                         >
-                            <div className="flex items-center justify-between">
-                                <h3 className="text-lg font-semibold text-[#1A1A1A]">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-2">
+                                <h3 className="text-base sm:text-lg font-semibold text-[#1A1A1A]">
                                     Результат ({numbers.length} чисел)
                                 </h3>
-                                <div className="flex gap-2">
+                                <div className="flex flex-wrap gap-1 sm:gap-2">
                                     <Button
                                         variant="outline"
                                         size="sm"
                                         onClick={generateNumbers}
-                                        className="text-[#4B5563] border-[#D1D5DB]"
+                                        className="text-[#4B5563] border-[#D1D5DB] text-xs px-2 py-1 h-7"
                                     >
-                                        <RefreshCw className="w-4 h-4 mr-2" />
-                                        Ещё раз
+                                        <RefreshCw className="w-3 h-3 mr-1" />
+                                        <span className="hidden sm:inline">Ещё раз</span>
+                                        <span className="sm:hidden">Ещё</span>
                                     </Button>
                                     <CopyButton
                                         text={getCopyText()}
                                         size="sm"
-                                        className="text-[#4B5563] border-[#D1D5DB]"
-                                    />
-                                    <Button
-                                        variant="outline"
-                                        size="sm"
-                                        onClick={shareResults}
-                                        className="text-[#4B5563] border-[#D1D5DB]"
+                                        className="text-[#4B5563] border-[#D1D5DB] text-xs px-2 py-1 h-7"
                                     >
-                                        <Share2 className="w-4 h-4 mr-2" />
-                                        Поделиться
-                                    </Button>
+                                        <span className="hidden sm:inline">Копировать</span>
+                                        <span className="sm:hidden">Копия</span>
+                                    </CopyButton>
+                                    <ShareButton
+                                        text={getShareText()}
+                                        title="Сгенерированные числа"
+                                        size="sm"
+                                        className="text-[#4B5563] border-[#D1D5DB] text-xs px-2 py-1 h-7"
+                                    >
+                                        <span className="hidden sm:inline">Поделиться</span>
+                                        <span className="sm:hidden">Шарить</span>
+                                    </ShareButton>
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2 md:gap-3">
                                 {numbers.map((number, index) => (
                                     <motion.div
                                         key={`${number.value}-${number.timestamp}-${index}`}
                                         initial={{ opacity: 0, scale: 0.8 }}
                                         animate={{ opacity: 1, scale: 1 }}
                                         transition={{ delay: index * 0.05 }}
-                                        className="bg-gradient-to-br from-[#FCE7D7] to-[#F9F5FF] rounded-xl p-4 text-center"
+                                        className="bg-gradient-to-br from-[#FCE7D7] to-[#F9F5FF] rounded-lg md:rounded-xl p-2 md:p-4 text-center"
                                     >
-                                        <div className="text-2xl font-bold text-[#1A1A1A]">
+                                        <div className="text-lg md:text-2xl font-bold text-[#1A1A1A] break-words">
                                             {number.value}
                                         </div>
                                     </motion.div>
