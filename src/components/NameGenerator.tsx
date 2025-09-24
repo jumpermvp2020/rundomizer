@@ -25,7 +25,6 @@ export default function NameGenerator() {
         // Имитация задержки для анимации
         setTimeout(() => {
             let selectedGender: 'male' | 'female'
-            const selectedName: string
 
             if (gender === 'any') {
                 // Случайно выбираем пол
