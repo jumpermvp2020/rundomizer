@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { CopyButton } from '@/components/ui/copy-button'
 import { RefreshCw, Share2 } from 'lucide-react'
-import { maleNames, femaleNames, Name } from '@/data/names'
+import { maleNames, femaleNames } from '@/data/names'
 
 interface GeneratedName {
     name: string
@@ -25,7 +25,7 @@ export default function NameGenerator() {
         // Имитация задержки для анимации
         setTimeout(() => {
             let selectedGender: 'male' | 'female'
-            let selectedName: string
+            const selectedName: string
 
             if (gender === 'any') {
                 // Случайно выбираем пол

@@ -64,7 +64,7 @@ export default function QuoteGenerator() {
                                         transition={{ delay: 0.2 }}
                                         className="text-xl md:text-2xl font-medium text-[#1A1A1A] leading-relaxed mb-6"
                                     >
-                                        "{currentQuote.quote.text}"
+                                        &ldquo;{currentQuote.quote.text}&rdquo;
                                     </motion.div>
                                     <motion.div
                                         initial={{ opacity: 0, x: -20 }}
